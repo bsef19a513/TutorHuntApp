@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
     inputstyle:{
         color:COLORS.white,
         fontSize:SIZES.h3,
-        borderBottomColor:COLORS.lightGrey,
+        borderBottomColor:COLORS.white,
         borderBottomWidth:1,
         paddingVertical:15,
         marginHorizontal:15,
-        marginVertical:2
+        marginVertical:2,
     },
     btncontainer:{
         marginTop:50
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         marginRight:10
     },
     text:{
-        color:COLORS.white,
+        color:COLORS.pink,
         textAlign:"center",
         fontWeight:"600",
         fontSize:SIZES.h5,

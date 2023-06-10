@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { View, Text, ImageBackground, ScrollView, TextInput, TouchableOpacity, Image, Alert, Linking } from "react-native";
 import { COLORS } from "../../constants/theme";
 import styles from "./style";
-
+// import firebase from "../../firebaseConfig";
 
 const SignInScreen = ({ navigation }) => {
+
+    // console.log(firebase);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,7 +31,7 @@ const SignInScreen = ({ navigation }) => {
         }
         else {
             let statusCode;
-            fetch(`http://192.168.100.11:3000/users/${email}`, {
+            fetch(`http://192.168.100.18:3000/users/${email}`, {
                 method: 'GET',
             }).then((res) => {
                 statusCode = res.status
@@ -69,7 +71,7 @@ const SignInScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ImageBackground
-                source={require("../../assets/bg.jpg")}
+                source={require("../../assets/back.jpg")}
                 style={
                     {
                         flex: 1
@@ -83,9 +85,9 @@ const SignInScreen = ({ navigation }) => {
                         <Text style={styles.subtitle}>SignIn to Continue</Text>
                     </View>
                     <View style={styles.datacontainer}>
-                        <TextInput onChangeText={value => setEmail(value)} placeholder="Email" keyboardType="email-address" placeholderTextColor={COLORS.lightGrey} style={styles.inputstyle} />
+                        <TextInput onChangeText={value => setEmail(value)} placeholder="Email" keyboardType="email-address" placeholderTextColor={COLORS.white} style={styles.inputstyle} />
                         {mailError ? <Text style={styles.errorstyle}>{mailError}</Text> : null}
-                        <TextInput onChangeText={value => setPassword(value)} placeholder="Password" placeholderTextColor={COLORS.lightGrey} secureTextEntry={true} style={styles.inputstyle} />
+                        <TextInput onChangeText={value => setPassword(value)} placeholder="Password" placeholderTextColor={COLORS.white} secureTextEntry={true} style={styles.inputstyle} />
                         {pwdError ? <Text style={styles.errorstyle}>{pwdError}</Text> : null}
                     </View>
                     <View style={styles.btncontainer}>

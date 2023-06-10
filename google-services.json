@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "198687905624",
+    "project_id": "tutorhuntapp",
+    "storage_bucket": "tutorhuntapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198687905624:android:a8e0f1f646e99abcbc772d",
+        "android_client_info": {
+          "package_name": "com.fyp.tutorhunt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198687905624-8v30a1cc7a63mkhji8p6mvoe62itoqv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcFeF1jo3hAZZeZk_29peOvHj3hpNaTB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "198687905624-8v30a1cc7a63mkhji8p6mvoe62itoqv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
