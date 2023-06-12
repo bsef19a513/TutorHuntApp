@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     inputstyle:{
         color:COLORS.white,
         fontSize:SIZES.h3,
-        borderBottomColor:COLORS.lightGrey,
+        borderBottomColor:COLORS.white,
         borderBottomWidth:1,
         paddingVertical:15,
         marginHorizontal:15,

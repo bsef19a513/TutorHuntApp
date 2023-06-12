@@ -1,32 +1,45 @@
-import React from 'react'
-import { View, Text, Image, Button, TouchableOpacity, Alert } from 'react-native'
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import styles from './style';
 
 const Card = (props) => {
+  const { name, age, exp, qual, phoneNumber, navigation } = props;
 
-    return (
-        <View style={styles.outerView}>
+  const handleChatPress = () => {
+    navigation.navigate('ChatComponent', {
+      receiverId: props.id,
+      receiverName: name,
+    });
+  };
 
-            <View style={styles.innerView}>
-                <Image style={styles.imageStyle} source={require("../../assets/tutor.jpg")} />
+  const handleCallPress = () => {
+    Linking.openURL(`tel:${phoneNumber}`);
+  };
 
-                <View style={styles.textViewStyle}>
-                    <Text style={styles.textStyle}>Name : <Text style={styles.innerTextStyle}>{props.name}</Text> </Text>
-                    <Text style={styles.textStyle}>Age : <Text style={styles.innerTextStyle}>{props.age}</Text> </Text>
-                    <Text style={styles.textStyle}>Experience : <Text style={styles.innerTextStyle}>{props.exp}</Text> </Text>
-                    <Text style={styles.textStyle}>Qualification : <Text style={styles.innerTextStyle}>{props.qual}</Text> </Text>
-                    <TouchableOpacity onPress={() => Alert.alert("Profile Data")}>
-                        <View style={styles.button}>
-                            <Text style={styles.buttonText}>View</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-
+  return (
+    <View style={styles.outerView}>
+      <View style={styles.innerView}>
+        <Image
+          source={require('../../assets/tutor.jpg')}
+          style={styles.imageStyle}
+        />
+        <View style={styles.textViewStyle}>
+          <Text style={styles.textStyle}>Name: <Text style={styles.innerTextStyle}>{name}</Text></Text>
+          <Text style={styles.textStyle}>Age: <Text style={styles.innerTextStyle}>{age}</Text></Text>
+          <Text style={styles.textStyle}>Experience: <Text style={styles.innerTextStyle}>{exp}</Text></Text>
+          <Text style={styles.textStyle}>Qualification: <Text style={styles.innerTextStyle}>{qual}</Text></Text>
         </View>
-    );
-
-}
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={handleChatPress} style={styles.button}>
+          <Text style={styles.buttonText}>Message</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleCallPress} style={styles.button}>
+          <Text style={styles.buttonText}>Call</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 export default Card;

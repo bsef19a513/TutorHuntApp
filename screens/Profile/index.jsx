@@ -67,38 +67,38 @@ const Profile = () => {
                     <>
                         <View style={{ alignItems: "center", marginTop: 50 }}>
                             <TouchableOpacity onPress={uploadImage} style={styles.pic}>
-                                {profilePic ? <Image source={{ uri: profilePic }} style={{ width: '100%', height: '100%' }} /> : <Text style={{ fontSize: SIZES.h4, textAlign: "center", opacity: 0.3, fontWeight: "bold" }}>
+                                {profilePic ? <Image source={{ uri: profilePic }} style={{ width: '100%', height: '100%' }} /> : <Text style={{ fontSize: SIZES.h4, textAlign: "center", opacity: 0.4, fontWeight: "bold" }}>
                                     Upload Profile Image
                                 </Text>}
                             </TouchableOpacity>
                         </View>
                         <View style={styles.container}>
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='person' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
-                                <TextInput style={styles.input} placeholder="Name"></TextInput>
+                                <Ionicons name='person' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
+                                <TextInput style={styles.input} placeholder="Name" placeholderTextColor="black"></TextInput>
                             </View>
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='mail' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
-                                <TextInput style={styles.input} placeholder="Email"></TextInput>
+                                <Ionicons name='mail' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
+                                <TextInput style={styles.input} placeholder="Email" placeholderTextColor="black"></TextInput>
                             </View>
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='timer' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
-                                <TextInput style={styles.input} placeholder="Age" placeh></TextInput>
+                                <Ionicons name='timer' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
+                                <TextInput style={styles.input} placeholder="Age" placeholderTextColor="black"></TextInput>
                             </View>
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='call' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
-                                <TextInput style={styles.input} placeholder="Phone Number"></TextInput>
+                                <Ionicons name='call' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
+                                <TextInput style={styles.input} placeholder="Phone Number" placeholderTextColor="black"></TextInput>
                             </View>
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='home' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
-                                <TextInput style={styles.input} placeholder="Address"></TextInput>
+                                <Ionicons name='home' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
+                                <TextInput style={styles.input} placeholder="Address" placeholderTextColor="black"></TextInput>
                             </View>
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='lock-closed' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
-                                <TextInput style={styles.input} placeholder="Password"></TextInput>
+                                <Ionicons name='lock-closed' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
+                                <TextInput style={styles.input} placeholder="Password" placeholderTextColor="black"></TextInput>
                             </View>
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='navigate' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
+                                <Ionicons name='navigate' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
                                 <Text style={[styles.input, { marginTop: 2 }]} > Availablity </Text>
                                 <View style={styles.radiocontainer}>
 
@@ -123,7 +123,7 @@ const Profile = () => {
                             </View>
 
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='moon' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
+                                <Ionicons name='moon' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
                                 <Text style={[styles.input, { marginTop: 2 }]} > Time </Text>
                                 <View style={styles.radiocontainer}>
 
@@ -148,12 +148,12 @@ const Profile = () => {
                             </View>
 
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='school' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
-                                <TextInput style={styles.input} placeholder="Qualification"></TextInput>
+                                <Ionicons name='school' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
+                                <TextInput style={styles.input} placeholder="Qualification" placeholderTextColor="black"></TextInput>
                             </View>
                             <View style={styles.inputcontainer}>
-                                <Ionicons name='cash' size={25} color="black" style={{ marginRight: 10 }}></Ionicons>
-                                <TextInput style={styles.input} placeholder="Charges per hour"></TextInput>
+                                <Ionicons name='cash' size={25} color={COLORS.primary} style={{ marginRight: 10 }}></Ionicons>
+                                <TextInput style={styles.input} placeholder="Charges per hour" placeholderTextColor="black"></TextInput>
                             </View>
                         </View>
                         <Text style={styles.inputtext}>Courses you are interested to offer </Text>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
         height: 150,
         borderRadius: 75,
         borderWidth: 2,
-        borderColor: COLORS.lightGrey,
+        borderColor: COLORS.primary,
         borderStyle: "dashed",
         overflow: "hidden"
     },
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     button2: {
-        backgroundColor: COLORS.title,
+        backgroundColor: COLORS.primary,
         padding: 20,
         borderRadius: 10,
         marginHorizontal: 30,

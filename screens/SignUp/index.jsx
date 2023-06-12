@@ -78,7 +78,7 @@ const SignUpScreen = ({ navigation }) => {
         }
         else {
             let statusCode;
-            fetch("http://192.168.100.18:3000/users/", {
+            fetch("http://192.168.145.153:3000/users/", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -90,6 +90,13 @@ const SignUpScreen = ({ navigation }) => {
             }).then((result) => {
                 if (statusCode < 400) {
                     console.log(result)
+                    setName("")
+                    setEmail("")
+                    setPhone("")
+                    setPassword("")
+                    setAddress("")
+                    setcnfrmPwd("")
+                    navigation.navigate('SignIn')
                 }
                 else {
                     console.log("Error with the creation !")
@@ -98,14 +105,13 @@ const SignUpScreen = ({ navigation }) => {
                 console.log(error)
             })
         }
-
         console.log(user) // for checking before sending to the db 
     }
 
     return (
         <View style={styles.container}>
             <ImageBackground
-                source={require("../../assets/bg.jpg")}
+                source={require("../../assets/new.jpg")}
                 style={
                     {
                         flex: 1
@@ -119,22 +125,22 @@ const SignUpScreen = ({ navigation }) => {
                         <Text style={styles.subtitle}>SignUp to Continue</Text>
                     </View>
                     <View style={styles.datacontainer}>
-                        <TextInput onChangeText={value => setName(value)} placeholder="Name" placeholderTextColor={COLORS.lightGrey} style={styles.inputstyle} />
+                        <TextInput value={name} onChangeText={value => setName(value)} placeholder="Name" placeholderTextColor={COLORS.white} style={styles.inputstyle} />
                         {nameError ? <Text style={styles.errorstyle}>{nameError}</Text> : null}
 
-                        <TextInput onChangeText={value => setEmail(value)} placeholder="Email" keyboardType="email-address" placeholderTextColor={COLORS.lightGrey} style={styles.inputstyle} />
+                        <TextInput value={email} onChangeText={value => setEmail(value)} placeholder="Email" keyboardType="email-address" placeholderTextColor={COLORS.white} style={styles.inputstyle} />
                         {mailError ? <Text style={styles.errorstyle}>{mailError}</Text> : null}
 
-                        <TextInput onChangeText={value => setPhone(value)} placeholder="Phone Number" keyboardType="phone-pad" placeholderTextColor={COLORS.lightGrey} style={styles.inputstyle} />
+                        <TextInput value={phone} onChangeText={value => setPhone(value)} placeholder="Phone Number" keyboardType="phone-pad" placeholderTextColor={COLORS.white} style={styles.inputstyle} />
                         {numberError ? <Text style={styles.errorstyle}>{numberError}</Text> : null}
 
-                        <TextInput onChangeText={value => setAddress(value)} placeholder="Address" placeholderTextColor={COLORS.lightGrey} style={styles.inputstyle} />
+                        <TextInput value={address} onChangeText={value => setAddress(value)} placeholder="Address" placeholderTextColor={COLORS.white} style={styles.inputstyle} />
                         {addressError ? <Text style={styles.errorstyle}>{addressError}</Text> : null}
 
-                        <TextInput onChangeText={value => setPassword(value)} placeholder="Password" placeholderTextColor={COLORS.lightGrey} secureTextEntry={true} style={styles.inputstyle} />
+                        <TextInput value={password} onChangeText={value => setPassword(value)} placeholder="Password" placeholderTextColor={COLORS.white} secureTextEntry={true} style={styles.inputstyle} />
                         {pwdError ? <Text style={styles.errorstyle}>{pwdError}</Text> : null}
 
-                        <TextInput onChangeText={value => setcnfrmPwd(value)} placeholder="Confirm Password" placeholderTextColor={COLORS.lightGrey} secureTextEntry={true} style={styles.inputstyle} />
+                        <TextInput value={cnfrmPwd} onChangeText={value => setcnfrmPwd(value)} placeholder="Confirm Password" placeholderTextColor={COLORS.white} secureTextEntry={true} style={styles.inputstyle} />
                         {cnfrmPwdError ? <Text style={styles.errorstyle}>{cnfrmPwdError}</Text> : null}
                     </View>
 

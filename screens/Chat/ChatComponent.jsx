@@ -1,16 +1,51 @@
-import React, { useState } from "react";
-import { View, FlatList, TextInput, TouchableOpacity, StyleSheet, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+} from "react-native";
+import { ref, push, update, onValue, off } from "firebase/database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { database } from "../../firebaseConfig";
 
-export default ChatComponent = () => {
-  const [messages, setMessages] = useState([
-    { id: 1, sender: "John", message: "Hello!", timestamp: "9:00 AM" },
-    { id: 2, sender: "Jane", message: "Hi there!", timestamp: "9:05 AM" },
-    { id: 3, sender: "John", message: "How are you?", timestamp: "9:10 AM" },
-    { id: 4, sender: "Jane", message: "I'm good. How about you?", timestamp: "9:15 AM" },
-  ]);
-
+export default ChatComponent = ({ route }) => {
+  const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState("");
-  const chatPartner = "Jane"; // Replace with the name of the chat partner
+  let {receiverName} = route.params; // Replace with the name of the chat partner
+  const { receiverId } = route.params;
+  const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    AsyncStorage.getItem("userId").then((id) => {
+      setUserId(id);
+
+      const messagesRef = ref(
+        database,
+        `/chatlist/${receiverId}/${id}/messages`
+      );
+
+      const messagesListener = onValue(messagesRef, (snapshot) => {
+        const data = snapshot.val();
+
+        if (data) {
+          const messagesList = Object.keys(data).map((key) => ({
+            id: key,
+            ...data[key],
+          }));
+          setMessages(messagesList);
+        }
+      });
+
+      return () => {
+        off(messagesRef, messagesListener);
+      };
+    });
+    AsyncStorage.getItem("name").then((name) => {setName(name)});
+  }, [receiverId]);
 
   const handleSendMessage = () => {
     if (inputText.trim() === "") {
@@ -18,26 +53,58 @@ export default ChatComponent = () => {
     }
 
     const newMessage = {
-      id: messages.length + 1,
-      sender: "John",
+      sender: userId,
+      name: name,
       message: inputText.trim(),
       timestamp: getCurrentTime(),
     };
 
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
     setInputText("");
+
+    let messageRef;
+    messageRef = ref(database, `/chatlist/${receiverId}/${userId}/messages`);
+
+    push(messageRef, newMessage)
+      .then()
+      .catch((error) => console.log("Error adding message:", error));
+
+    messageRef = ref(database, `/chatlist/${userId}/${receiverId}/messages`);
+
+    push(messageRef, newMessage)
+      .then()
+      .catch((error) => console.log("Error adding message:", error));
   };
 
   const renderMessage = ({ item }) => {
-    const isSender = item.sender === "John";
+    const isSender = item.sender === userId;
 
     return (
-      <View style={[styles.messageContainer, isSender ? styles.senderContainer : styles.receiverContainer]}>
-        <View style={[styles.messageBubble, isSender ? styles.senderBubble : styles.receiverBubble]}>
-          <Text style={[styles.sender, isSender ? styles.senderText : styles.receiverText]}>
-            {item.sender}
+      <View
+        style={[
+          styles.messageContainer,
+          isSender ? styles.senderContainer : styles.receiverContainer,
+        ]}
+      >
+        <View
+          style={[
+            styles.messageBubble,
+            isSender ? styles.senderBubble : styles.receiverBubble,
+          ]}
+        >
+          <Text
+            style={[
+              styles.sender,
+              isSender ? styles.senderText : styles.receiverText,
+            ]}
+          >
+            {item.name}
           </Text>
-          <Text style={[styles.message, isSender ? styles.senderText : styles.receiverText]}>
+          <Text
+            style={[
+              styles.message,
+              isSender ? styles.senderText : styles.receiverText,
+            ]}
+          >
             {item.message}
           </Text>
         </View>
@@ -50,17 +117,19 @@ export default ChatComponent = () => {
     const date = new Date();
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    return `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${hours < 12 ? "AM" : "PM"}`;
+    return `${hours}:${minutes < 10 ? "0" + minutes : minutes} ${
+      hours < 12 ? "AM" : "PM"
+    }`;
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>{chatPartner}</Text>
+        <Text style={styles.headerTitle}>{receiverName}</Text>
       </View>
       <FlatList
         data={messages}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={renderMessage}
         contentContainerStyle={styles.messagesContainer}
       />
@@ -119,7 +188,7 @@ const styles = StyleSheet.create({
     maxWidth: "80%",
   },
   senderBubble: {
-    backgroundColor: "#d95b71",
+    backgroundColor: "#f52d56",
     marginTop: 5,
   },
   receiverBubble: {
@@ -130,7 +199,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   senderText: {
-    color: "#000",
+    color: "#FFFFFF",
   },
   receiverText: {
     color: "#000",

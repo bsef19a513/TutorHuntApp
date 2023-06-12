@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         marginVertical:2,
     },
     btncontainer:{
-        marginTop:50
+        marginTop:150
     },
     button1:{
         backgroundColor:COLORS.primary,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         marginRight:10
     },
     text:{
-        color:COLORS.pink,
+        color:COLORS.white,
         textAlign:"center",
         fontWeight:"600",
         fontSize:SIZES.h5,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     bottomcontainer:{
         justifyContent:"center",
-        marginTop:180
+        marginTop:150
     },
     errorstyle:{
         color:COLORS.primary,
