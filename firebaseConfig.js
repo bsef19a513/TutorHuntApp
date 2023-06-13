@@ -19,7 +19,7 @@ const database = getDatabase(app);
 export { app, database };
 
 function storeData(data) {
-  const newDataRef = push(ref(db));
+  const newDataRef = push(ref(database));
 
   set(newDataRef, data)
     .then(() => {

@@ -31,7 +31,7 @@ const InboxComponent = ({ navigation }) => {
                 Object.keys(data).map(async (key) => {
                   try {
                     const response = await fetch(
-                      `http://192.168.0.140:3000/users/profile/${key}`
+                      `http://192.168.31.32:3000/users/profile/${key}`
                     ); // Replace with your API endpoint
                     if (!response.ok) {
                       throw new Error("Failed to fetch profile data");

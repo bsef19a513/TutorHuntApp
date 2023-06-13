@@ -13,16 +13,33 @@ import {
 import { COLORS } from "../../constants/theme";
 import styles from "./style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Location from "expo-location";
+import { app, database } from "../../firebaseConfig";
+import { ref, set, get, update } from "firebase/database";
 
 const SignInScreen = ({ navigation }) => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [mailError, setMailError] = useState("");
   const [pwdError, setPwdError] = useState("");
 
-  const validate = () => {
+  const getCurrentLocation = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        // Permission not granted, handle accordingly
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+      return { latitude, longitude };
+    } catch (error) {
+      console.error("Error getting current location:", error);
+    }
+  };
+
+  const validate = async () => {
     if (email == "" || password == "") {
       if (email == "") {
         setMailError("Email cannot be empty");
@@ -38,7 +55,7 @@ const SignInScreen = ({ navigation }) => {
       }
     } else {
       let statusCode;
-      fetch(`http://192.168.0.140:3000/users/${email}`, {
+      fetch(`http://192.168.31.32:3000/users/${email}`, {
         method: "GET",
       })
         .then((res) => {
@@ -48,30 +65,65 @@ const SignInScreen = ({ navigation }) => {
           }
           return;
         })
-        .then((result) => {
+        .then(async (result) => {
           if (statusCode < 400) {
             if (result.password == password) {
               const userId = result._id;
               const name = result.name;
               AsyncStorage.setItem("userId", userId).then();
               AsyncStorage.setItem("name", name).then();
+
+              // Retrieve user's location
+              const location = await getCurrentLocation();
+              if (location) {
+                const { latitude, longitude } = location;
+
+                const userLocationRef = ref(
+                  database,
+                  `locations/${userId}/location`
+                );
+
+                // Check if the user's location already exists in Firebase
+                get(userLocationRef)
+                  .then((snapshot) => {
+                    if (snapshot.exists()) {
+                      // Location already exists, update it with the new coordinates
+                      update(userLocationRef, { latitude, longitude })
+                        .then(() => {
+                          console.log("Location updated successfully");
+                        })
+                        .catch((error) => {
+                          console.log("Error updating location:", error);
+                        });
+                    } else {
+                      // Location doesn't exist, store it in Firebase
+                      set(userLocationRef, { latitude, longitude })
+                        .then(() => {
+                          console.log("Location stored successfully");
+                        })
+                        .catch((error) => {
+                          console.log("Error storing location:", error);
+                        });
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("Error checking location:", error);
+                  });
+              }
+
               if (result.role == "student") {
-                // setEmail("")
-                // setPassword("")
                 navigation.navigate("StudentDashboard");
               } else {
-                // setEmail("")
-                // setPassword("")
                 navigation.navigate("TutorDashboard");
               }
             } else {
-              setPwdError("Authenctication Error");
+              setPwdError("Authentication Error");
               setTimeout(() => {
                 setPwdError("");
               }, 5000);
             }
           } else {
-            setPwdError("Authenctication Error");
+            setPwdError("Authentication Error");
             setTimeout(() => {
               setPwdError("");
             }, 5000);

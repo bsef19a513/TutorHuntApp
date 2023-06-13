@@ -78,7 +78,7 @@ const SignUpScreen = ({ navigation }) => {
         }
         else {
             let statusCode;
-            fetch("http://192.168.145.153:3000/users/", {
+            fetch("http://192.168.31.32:3000/users/", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"

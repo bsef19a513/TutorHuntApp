@@ -16,6 +16,7 @@ import Profile from "./screens/Profile";
 import ChatComponent from "./screens/Chat/ChatComponent";
 import StudentDashboardScreen from "./screens/StudentDashBoard";
 import InboxComponent from "./screens/inbox/inbox";
+import LocationComponent from "./screens/Location/LocationComponent";
 
 const Stack = createNativeStackNavigator();
 
@@ -106,6 +107,11 @@ const App = () => {
         />
         <Stack.Screen name="SignUp" component={SignUpScreen}
           options={{ headerShown: false, title: "Sign Up" }}
+        />
+        <Stack.Screen
+          name="LocationComponent"
+          component={LocationComponent}
+          options={{ headerShown: false, title: "Location Component" }}
         />
         <Stack.Screen name="ForgetPwd" component={ForgetPwdScreen}
           options={{ title: "Forget Password", headerTintColor: COLORS.white,
